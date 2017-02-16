@@ -1,0 +1,14 @@
+{
+  "name": "@alexsasharegan/keycodes",
+  "version": "1.0.0",
+  "description": "A set of named constants mapping to event keycodes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "keycodes"
+  ],
+  "author": "Alex Regan <alex.joseph.regan@gmail.com> (https://github.com/alexsasharegan)",
+  "license": "ISC"
+}
