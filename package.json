@@ -1,6 +1,6 @@
 {
   "name": "@alexsasharegan/keycodes",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A set of named constants mapping to event keycodes.",
   "main": "index.js",
   "repository": {
