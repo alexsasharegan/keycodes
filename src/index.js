@@ -69,7 +69,7 @@
 	};
 	
 	// letters
-	for ( let i = 97; i < 123; i++ ) NAMES[ `LETTER_${String.fromCharCode( i - 32 )}` ] = i - 32;
+	for ( let i = 65; i < 91; i++ ) NAMES[ `LETTER_${String.fromCharCode( i )}` ] = i;
 	
 	// function keys
 	for ( let i = 1; i <= 19; i++ ) NAMES[ `F${i}` ] = i + 111;
