@@ -78,7 +78,7 @@
 	for ( let i = 0; i <= 9; i++ ) NAMES[ numToStrMap[ i ] ] = i + 48;
 	
 	// numeric keypad keys
-	for ( let i = 0; i < 10; i++ ) NAMES[ `NUMPAD_${numToStrMap[ i ]}` ] = i + 96;
+	for ( let i = 0; i <= 9; i++ ) NAMES[ `NUMPAD_${numToStrMap[ i ]}` ] = i + 96;
 	
 	// reverse mapping
 	const CODES = {};
@@ -88,20 +88,16 @@
 		// Normalize from event object
 		if ( searchInput && typeof searchInput === 'object' ) {
 			let hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
-			if ( hasKeyCode ) searchInput = hasKeyCode
+			if ( hasKeyCode ) searchInput = hasKeyCode;
 		}
 		
-		// Numbers
+		// Number codes
 		if ( typeof searchInput === 'number' ) return CODES[ searchInput ];
 		
 		// Everything else (cast to string)
 		let search = String( searchInput );
 		
-		// check codes
-		let foundNamedKey = NAMES[ search.toUpperCase() ];
-		if ( foundNamedKey ) return foundNamedKey;
-		
-		return undefined
+		return NAMES[ search.toUpperCase() ];
 	};
 	
 	keycode.names = NAMES;
