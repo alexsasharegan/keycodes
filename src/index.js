@@ -101,11 +101,11 @@
 	};
 	
 	keycode.is = function ( key, search ) {
-		let target = typeof key === 'number' ? key : NAMES[ String( key ) ];
+		let target = typeof key === 'number' ? key : NAMES[ String( key ).toUpperCase() ];
 		
 		return (
 			search
-				? keycode( search ) === target
+				? keycode( search, true ) === target
 				: curriedSearch => target === keycode( curriedSearch, true )
 		);
 	};
