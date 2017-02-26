@@ -84,7 +84,7 @@
 	const CODES = {};
 	for ( let name in NAMES ) CODES[ NAMES[ name ] ] = name;
 	
-	const keycode = function ( searchInput ) {
+	const keycode = function ( searchInput, returnAsCode = false ) {
 		// Normalize from event object
 		if ( searchInput && typeof searchInput === 'object' ) {
 			let hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
@@ -92,12 +92,22 @@
 		}
 		
 		// Number codes
-		if ( typeof searchInput === 'number' ) return CODES[ searchInput ];
+		if ( typeof searchInput === 'number' ) return returnAsCode ? searchInput : CODES[ searchInput ];
 		
 		// Everything else (cast to string)
 		let search = String( searchInput );
 		
 		return NAMES[ search.toUpperCase() ];
+	};
+	
+	keycode.is = function ( key, search ) {
+		let target = typeof key === 'number' ? key : NAMES[ String( key ) ];
+		
+		return (
+			search
+				? keycode( search ) === target
+				: curriedSearch => target === keycode( curriedSearch, true )
+		);
 	};
 	
 	keycode.names = NAMES;
