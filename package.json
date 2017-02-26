@@ -10,10 +10,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "BABEL_ENV=production babel src -d ./",
-    "publish": "npm publish --access=public",
-    "patch": "npm version patch",
-    "minor": "npm version minor",
-    "major": "npm version major"
+    "publish": "npm run build && npm publish --access=public",
+    "patch": "npm run build && npm version patch",
+    "minor": "npm run build && npm version minor",
+    "major": "npm run build && npm version major"
   },
   "keywords": [
     "keycodes",
