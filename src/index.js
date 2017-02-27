@@ -1,4 +1,4 @@
-(function () {
+(function ( exports, global ) {
 	'use strict';
 	
 	const numToStrMap = {
@@ -68,6 +68,8 @@
 		APOSTROPHE: 222
 	};
 	
+	/***************************** Dynamic Allocation *****************************/
+	
 	// letters
 	for ( let i = 65; i < 91; i++ ) NAMES[ `LETTER_${String.fromCharCode( i )}` ] = i;
 	
@@ -84,7 +86,7 @@
 	const CODES = {};
 	for ( let name in NAMES ) CODES[ NAMES[ name ] ] = name;
 	
-	const keycode = function ( searchInput, returnAsCode = false ) {
+	function keycode( searchInput, returnAsCode = false ) {
 		// Normalize from event object
 		if ( searchInput && typeof searchInput === 'object' ) {
 			let hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
@@ -100,7 +102,7 @@
 		return NAMES[ search.toUpperCase() ];
 	};
 	
-	keycode.is = function ( key, search ) {
+	function is( key, search ) {
 		let target = typeof key === 'number' ? key : NAMES[ String( key ).toUpperCase() ];
 		
 		return (
@@ -108,18 +110,17 @@
 				? keycode( search, true ) === target
 				: curriedSearch => target === keycode( curriedSearch, true )
 		);
-	};
+	}
 	
+	keycode.is    = is;
 	keycode.names = NAMES;
 	keycode.codes = CODES;
 	
-	if ( typeof module === "object" && typeof module.exports === "object" ) {
-		module.exports = keycode;
-	} else {
-		if ( typeof window !== "undefined" ) {
-			window.keycode = keycode;
-		} else {
-			return keycode;
-		}
-	}
-}());
+	if ( exports ) module.exports = keycode;
+	else if ( global ) global.keycode = keycode;
+	
+	return keycode;
+}(
+	typeof module === "object" && typeof module.exports === "object"
+	, typeof window !== "undefined" ? window : null
+));
