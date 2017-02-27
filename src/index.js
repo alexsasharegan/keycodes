@@ -72,7 +72,7 @@
 	/***************************** Dynamic Allocation *****************************/
 	
 	// letters
-	for ( let i = 65; i < 91; i++ ) NAMES[ `LETTER_${String.fromCharCode( i )}` ] = i;
+	for ( let i = 65; i < 91; i++ ) NAMES[ String.fromCharCode( i ) ] = i;
 	
 	// function keys
 	for ( let i = 1; i <= 19; i++ ) NAMES[ `F${i}` ] = i + 111;
@@ -92,6 +92,14 @@
 		else CODES[ code ] = name;
 	}
 	
+	function getCodeFromName( search ) {
+		const RE = /\s+/g;
+		let name = String( search ).toUpperCase();
+		if ( RE.test( name ) ) name = name.replace( RE, '_' );
+		
+		return NAMES[ name ];
+	}
+	
 	function keycode( search, returnAsCode = false ) {
 		// Normalize from event object
 		if ( search && typeof search === 'object' ) {
@@ -102,11 +110,11 @@
 		// Number codes
 		if ( typeof search === 'number' ) return returnAsCode ? search : CODES[ search ];
 		
-		return NAMES[ String( search ).toUpperCase() ];
+		return getCodeFromName( search );
 	};
 	
 	function is( key, search ) {
-		let target = typeof key === 'number' ? key : NAMES[ String( key ).toUpperCase() ];
+		let target = typeof key === 'number' ? key : getCodeFromName( key );
 		
 		return (
 			search
