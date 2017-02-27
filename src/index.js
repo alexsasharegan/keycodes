@@ -38,10 +38,11 @@
 		DOWN_ARROW: 40,
 		INSERT: 45,
 		DELETE: 46,
-		COMMAND_LEFT: 91,
-		WINDOWS: 91,
-		COMMAND_RIGHT: 93,
-		WINDOWS_MENU: 93,
+		COMMAND: [ 91, 93, 224 ],
+		COMMAND_LEFT: [ 91, 224 ],
+		WINDOWS: [ 91, 224 ],
+		COMMAND_RIGHT: [ 93, 224 ],
+		WINDOWS_MENU: [ 93, 224 ],
 		NUMPAD_ASTERISK: 106,
 		NUMPAD_PLUS: 107,
 		NUMPAD_DASH: 109,
@@ -84,22 +85,24 @@
 	
 	// reverse mapping
 	const CODES = {};
-	for ( let name in NAMES ) CODES[ NAMES[ name ] ] = name;
+	for ( let name in NAMES ) {
+		let code = NAMES[ name ];
+		
+		if ( Array.isArray( code ) ) code.forEach( codeVal => CODES[ codeVal ] = name );
+		else CODES[ code ] = name;
+	}
 	
-	function keycode( searchInput, returnAsCode = false ) {
+	function keycode( search, returnAsCode = false ) {
 		// Normalize from event object
-		if ( searchInput && typeof searchInput === 'object' ) {
-			let hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
-			if ( hasKeyCode ) searchInput = hasKeyCode;
+		if ( search && typeof search === 'object' ) {
+			let hasKeyCode = search.which || search.keyCode || search.charCode;
+			if ( hasKeyCode ) search = hasKeyCode;
 		}
 		
 		// Number codes
-		if ( typeof searchInput === 'number' ) return returnAsCode ? searchInput : CODES[ searchInput ];
+		if ( typeof search === 'number' ) return returnAsCode ? search : CODES[ search ];
 		
-		// Everything else (cast to string)
-		let search = String( searchInput );
-		
-		return NAMES[ search.toUpperCase() ];
+		return NAMES[ String( search ).toUpperCase() ];
 	};
 	
 	function is( key, search ) {
